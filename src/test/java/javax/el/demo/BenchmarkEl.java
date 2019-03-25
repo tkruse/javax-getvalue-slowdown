@@ -30,6 +30,7 @@ public class BenchmarkEl {
         elResolver.add(new BeanELResolver());
         elResolver.add(new MapELResolver());
 
+
         final VariableMapper variableMapper = new VariableMapperImpl();
         variableMapper.setVariable("countries", expressionFactory.createValueExpression(new HashSet<>(Arrays.asList("AA", "BB", "CC", "DD", "EE", "FF", "GG", "HH", "II", "JJ", "KK", "LL", "MM")), Set.class));
         variableMapper.setVariable("NN", expressionFactory.createValueExpression("NN", String.class));
@@ -69,9 +70,18 @@ public class BenchmarkEl {
 
             @Override
             public Object convertToType(final Object obj, final Class<?> type) {
-                // Uncomment this using apache-el:8 to avoid slowdown
+                // Uncomment this using apache-el:8+ to reduce slowdown
+//                if (type == null
+//                        || Object.class.equals(type)
+//                        || (obj != null && type.isAssignableFrom(obj.getClass()))
+//                        || obj == null
+//                ) {
+//                    return obj;
+//                    // alternative:
+//                    // return ELSupport.coerceToType(null, obj, type);
+//                }
+
                 return super.convertToType(obj, type);
-                // return ELSupport.coerceToType(null, obj, type);
             }
         };
 
@@ -86,6 +96,8 @@ public class BenchmarkEl {
         for (int i = 0; i < iterations; i++) {
             for (int j = 0; j < expressions.length; j++) {
                 final Object result = ves[j].getValue(elContext);
+                // alternative benchmarks:
+                // Object result = elContext.convertToType("Foo", String.class);
                 if (i % 10000 == 0) {
                     System.out.println(result);
                 }
@@ -95,6 +107,6 @@ public class BenchmarkEl {
         elapsed += System.currentTimeMillis();
 
         final int total = iterations * expressions.length;
-        System.out.println(total + " expressions in " + elapsed + " ms (average " + (elapsed/(((double) total))) + " ms/expression)");
+        System.out.println(total + " expressions in " + elapsed + " ms");
     }
 }
