@@ -20,8 +20,8 @@ repositories {
 dependencies {
 //    compile 'org.apache.tomcat:tomcat-el-api:7.0.8' //92, 116
 //    compile 'org.apache.tomcat:tomcat-jasper-el:7.0.8'
-    compile 'org.apache.tomcat:tomcat-el-api:8.5.38'
-    compile 'org.apache.tomcat:tomcat-jasper-el:8.5.38'
+    compile 'org.apache.tomcat:tomcat-el-api:8.5.39'
+    compile 'org.apache.tomcat:tomcat-jasper-el:8.5.39'
 
     // compile 'org.mortbay.jasper:apache-jsp:9.0.14.1'
     //compile 'org.mortbay.jasper:apache-el:9.0.14.1' // 200, 272, 350
