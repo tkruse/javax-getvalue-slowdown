@@ -1,6 +1,7 @@
 package javax.el.demo;
 
 import org.apache.el.ExpressionFactoryImpl;
+import org.apache.el.lang.ELSupport;
 import org.apache.el.lang.FunctionMapperImpl;
 import org.apache.el.lang.VariableMapperImpl;
 
@@ -65,11 +66,13 @@ public class BenchmarkEl {
                 return variableMapper;
             }
 
-            // Uncomment this using apache-el:8 to avoid slowdown
-//            @Override
-//            public Object convertToType(final Object obj, final Class<?> type) {
-//                return  ELSupport.coerceToType(null, obj, type);
-//            }
+
+            @Override
+            public Object convertToType(final Object obj, final Class<?> type) {
+                // Uncomment this using apache-el:8 to avoid slowdown
+                return super.convertToType(obj, type);
+                // return ELSupport.coerceToType(null, obj, type);
+            }
         };
 
         final ValueExpression[] ves = new ValueExpression[expressions.length];
